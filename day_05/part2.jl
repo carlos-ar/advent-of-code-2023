@@ -17,6 +17,7 @@ function parse_lines(input)
             split_line = split(line, ":")
             seeds = split(split_line[2], " ")
             seeds = [parse(Int, s) for s in seeds if s!=""]
+            push!(ordered_keys, "seed-to-seed map")
         elseif occursin("map", line)
             split_line = split(line, " ")
             map_name = split_line[1]
@@ -57,8 +58,17 @@ function parse_lines(input)
        
     end
 
+    # adding seed to seep maping ?
+    seedseed_matrix = Matrix{Int}(undef,0,3)
+    # rows = Int[]
+    for (start_seed, num_seeds) in zip(seeds[begin:2:end], seeds[begin+1:2:end])
+        rows = Int[start_seed, start_seed, num_seeds]
+        seedseed_matrix = cat(seedseed_matrix, rows', dims=1)
+    end
+    data_dict["seed-to-seed map"] = seedseed_matrix
+
     # THIS TAKES TOO LONG :(
-    long = false
+    long = true
     if long == true
         # adding part 2 processing seed ranges
         new_seeds = Int[]
@@ -71,7 +81,7 @@ function parse_lines(input)
             # println(range_seeds)
             new_seeds = cat(new_seeds, range_seeds, dims=1)
         end
-        println(seeds)
+        # println(seeds)
         # print(new_seeds)
         # println(data_dict)
         # end
@@ -270,13 +280,14 @@ function process_maps_fast(map_matrix, seeds, maps)
 
     println("SOLUTION: ", minimum(locations))
 end
-
+@time begin
 # matrix_maps, seeds, map_names = parse_lines("day_05/part1_sample_edit.txt")
-matrix_maps, seeds, map_names = parse_lines("day_05/part1_sample.txt")
-# matrix_maps, seeds, map_names = parse_lines("day_05/input.txt")
+# matrix_maps, seeds, map_names = parse_lines("day_05/part1_sample.txt")
+matrix_maps, seeds, map_names = parse_lines("day_05/input.txt")
 
 # process_maps_naive(matrix_maps, seeds, map_names)
-# process_maps(matrix_maps, seeds, map_names)
-process_maps_fast(matrix_maps, seeds, map_names)
+process_maps(matrix_maps, seeds, map_names)
+# process_maps_fast(matrix_maps, seeds, map_names)
 # println(matrix_maps)
 println("done")
+end

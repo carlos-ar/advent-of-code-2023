@@ -60,7 +60,7 @@ function get_matches(input)
 end
 
 # n, s, nb, g = get_matches("day_03/part1_sample_edit.txt")
-winning = get_matches("day_04/part1_sample.txt")
-# winning = get_matches("day_04/input.txt")
+# winning = get_matches("day_04/part1_sample.txt")
+winning = get_matches("day_04/input.txt")
 println(winning)
 println("done")

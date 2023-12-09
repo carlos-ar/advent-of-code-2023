@@ -120,19 +120,20 @@ end
 # tree, steps = create_network("day_08/part1_sample_edit.txt")
 tree, steps, start_nodes = create_network("day_08/input.txt")
 
-array_steps = Int[]
+array_steps = []
 for single_node in start_nodes
     start_node = [single_node]
     steps_taken = traverse_network(tree, steps, start_node)
     println("steps taken: $steps_taken, for node: $start_node")
-    push!(array_steps, steps_taken)
+    
     
     # how many times did i go through the steps
-    num_step_loops = mod(steps_taken, length(steps) )
+    num_step_loops = steps_taken/length(steps)
+    push!(array_steps, num_step_loops)
     println("loop through the step list: $num_step_loops")
 end
-
-println("number of steps: ", length(steps))
+final_steps = Int(prod(array_steps)*277)
+println("number of steps: $final_steps")
 # println(tree)
 # display(tree)
 # print("steps taken: $steps_taken")
