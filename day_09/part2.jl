@@ -34,9 +34,9 @@ function loop_down(line)
             current_line = difference
         end
 
-        println(start_array)
-        wait_for_key(prompt) = (print(stdout, prompt); read(stdin, 1); nothing)
-        wait_for_key("continue")
+        # println(start_array)
+        # wait_for_key(prompt) = (print(stdout, prompt); read(stdin, 1); nothing)
+        # wait_for_key("continue")
 
 
     end
@@ -68,8 +68,8 @@ function parse_input(input)
     return final_interp
 end
 
-final = parse_input("day_09/part1_sample.txt")
+# final = parse_input("day_09/part1_sample.txt")
 # final = parse_input("day_09/part1_sample_edit.txt")
-# final = parse_input("day_09/input.txt")
+final = parse_input("day_09/input.txt")
 
 println("SOLUTION: $final")
