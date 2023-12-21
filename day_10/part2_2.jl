@@ -277,10 +277,13 @@ out_m, path_matrix = traverse_graph(out_p, start, dims)
 # m = (a->(@sprintf "%4d" a)).(out_m)
 # writedlm("./loopy.txt", m, "" , quotes=false)
 nonzero = out_m.*path_matrix
-bit_nonzero = (nonzero .> 0)
-fl_path_matrix = path_matriz
-flood_fill(fl_path_matrix, (75,75))
 
+fl_path_matrix = copy(path_matrix)
+flood_fill(fl_path_matrix, (75,75))
+fl_path_matrix = fl_path_matrix .>7
+
+nonzero = nonzero + fl_path_matrix
+bit_nonzero = (nonzero .> 0)
 sum_sol = sum(bit_nonzero)
 println()
 println("Solution should be: $sum_sol")
@@ -293,7 +296,7 @@ if plot_network == true
     p2 = heatmap(path_matrix)
     p3 = heatmap(nonzero)
     p4 = heatmap(bit_nonzero)
-    # p4 = heatmap(fl)
+    # p4 = heatmap(fl_path_matrix)
     plot(p1, p2, p3, p4,  layout=(2,2))
     # plot(p1,p2,  layout=(2,2))
 
